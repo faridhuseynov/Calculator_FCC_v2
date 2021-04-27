@@ -1,23 +1,34 @@
 import logo from './logo.svg';
 import './App.css';
+import Display from './components/Display/Display';
+import Keyboard from './components/Keyboard/Keyboard';
+import { useState } from 'react';
+
+
 
 function App() {
+  const [display,setDisplay]=useState("0");
+  const [nonNumClicked,setNonNumClicked] = useState(false);
+  const [clickedChar,setClickedChar] = useState(0);
+  
+  const numberClickedHandler = event =>{
+    var newChar = event.target.value;
+    if(!nonNumClicked){
+      let displayString = display.toString();
+      displayString = displayString.concat(newChar);
+      setDisplay(Number(displayString));
+    }
+  }
+
+  const clearClickedHandler = () =>{
+    setDisplay("0");
+  }
+
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Display displayValue = {display} />
+      <Keyboard numClicked = {numberClickedHandler} onClearClicked = {clearClickedHandler} />
     </div>
   );
 }
