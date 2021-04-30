@@ -1,16 +1,25 @@
 .display {
     width: 340px;
+    display: flex;
+    flex-direction: column;
 }
+
 .opsDisplay {
+    border-radius: 1px;
+    border: none;
     background-color: black;
     padding: 5px;
     color: rgb(244, 209, 96);
     text-align: end;
+    font-size: 17px;
 }
 
 .buttonDisplay {
+    border-radius: 1px;
+    border: none;
     background-color: black;
     padding: 5px;
     color: white;
     text-align: end;
+    font-size: 20px;
 }

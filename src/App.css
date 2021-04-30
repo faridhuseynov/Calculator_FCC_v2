@@ -8,3 +8,9 @@
   justify-content: center;
   align-items: center;
 }
+
+.Device{
+  background-color: #02475e;
+  padding: 5px;
+  border-radius: 5px;
+}

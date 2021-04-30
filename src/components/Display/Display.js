@@ -6,7 +6,7 @@ import Card from "../UI/Card"
 const Display = props =>{
     return(
         <Card className={classes.display}>
-            <input className={classes.opsDisplay} />
+            <input className={classes.opsDisplay} value={props.opsString} readOnly/>
             <input id="display" className={classes.buttonDisplay} value={props.displayValue} readOnly/>
         </Card>
     )
