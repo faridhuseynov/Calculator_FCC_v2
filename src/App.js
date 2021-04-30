@@ -18,20 +18,21 @@ function App() {
     var newChar = event.target.value;
     if (evaluateClicked) {
       setEvaluateClicked(false);
+      setCharDisplay(newChar);
     } else {
       newOpsString = opsString;
+      var check = /[\+\x\/\-]$/.test(charDisplay);
+      if (check) {
+        setCharDisplay(newChar);
+      } else {
+        let displayString = charDisplay.toString();
+        displayString = displayString.concat(newChar);
+        displayString = Number(displayString);
+        setCharDisplay(displayString);
+      }
     }
     newOpsString = newOpsString.concat(newChar);
     setOpsString(newOpsString);
-    var check = /[\+\x\/\-]$/.test(charDisplay);
-    if (check) {
-      setCharDisplay(newChar);
-    } else {
-      let displayString = charDisplay.toString();
-      displayString = displayString.concat(newChar);
-      displayString = Number(displayString);
-      setCharDisplay(displayString);
-    }
   }
 
 const nonNumberClickedHandler = event =>{
@@ -39,31 +40,49 @@ const nonNumberClickedHandler = event =>{
   setCharDisplay(newChar);
   let newOpsString = opsString;
 
-  var check = /[\+\x\/]$/.test(newOpsString);
-  if(check){
-    newOpsString = newOpsString.split("");
-    newOpsString.pop();
-    newOpsString = newOpsString.join("").concat(newChar);
+  if(/[\+\x\/]$|--$/.test(newOpsString)){
+    newOpsString = removeLastChar(newOpsString).concat(newChar);
     setOpsString(newOpsString);
-  }else{
+  }
+  else{
     newOpsString = newOpsString.concat(newChar);
     setOpsString(newOpsString);
   }
 }
 
 const evaluationHandler=()=>{
-  const result = eval(opsString);
-  var resultString = opsString.concat(`=${result}`);
-  setCharDisplay(result);
-  setOpsString(resultString);
-  setEvaluateClicked(true);
+  if(!evaluateClicked){
+    var testString=opsString;
+    if(/--/.test(testString)){
+      testString = opsString.replaceAll('--','+');
+    }
+    if(/[\+\x\/\-]$/.test(testString)){
+      testString = removeLastChar(testString);
+    }
+    if(/[0-9]/.test(testString)==false){
+      setCharDisplay("NaN");
+      setOpsString("=NaN");
+    }else{
+      const result = eval(testString);
+      var resultString = testString.concat(`=${result}`);
+      setCharDisplay(result);
+      setOpsString(resultString);
+    }
+    setEvaluateClicked(true);
+  }
 }
 
+const removeLastChar=operationString=>{
+  const newOpsString = operationString.split("");
+    newOpsString.pop();
+    return newOpsString.join("");
+}
   const clearClickedHandler = () => {
     setCharDisplay("0");
     setOpsString("");
   }
 
+  // onEqualClicked = {evaluationHandler}
 
   return (
     <div className="App">
