@@ -73,7 +73,7 @@ const evaluationHandler=()=>{
 }
 
 const removeLastChar=operationString=>{
-  const newOpsString = operationString.split("");
+  const newOpsString = (operationString.replaceAll('--','+',)).split("");
     newOpsString.pop();
     return newOpsString.join("");
 }
