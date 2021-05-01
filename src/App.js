@@ -30,11 +30,6 @@ function App() {
           displayString = removeLastChar(displayString);
         }
         displayString = displayString.concat(newChar);
-        // if((/[0-9]\.[0]/)){
-
-        // }else{
-        //   displayString = (Number(displayString));
-        // }
         setCharDisplay(displayString);
       }
     }
@@ -44,8 +39,14 @@ function App() {
 
 const nonNumberClickedHandler = event =>{
   let newChar = event.target.value;
+  let newOpsString="";
+  if(evaluateClicked){
+    setEvaluateClicked(false);
+    newOpsString=charDisplay.toString();
+  }else{
+    newOpsString = opsString;
+  }
   setCharDisplay(newChar);
-  let newOpsString = opsString;
 
   if((/--$/).test(newOpsString)){
     if(newChar!="-"){
@@ -54,7 +55,6 @@ const nonNumberClickedHandler = event =>{
   }
   else if(/[\+\x\/]$/.test(newOpsString) && newChar!="-"){
     newOpsString = removeLastChar(newOpsString).concat(newChar);
-    // setOpsString(newOpsString);
   }
   else if((/[\+\/\x]\-$/).test(newOpsString)){
     if(newChar!="-"){
@@ -75,7 +75,6 @@ const decimalClickedHandler=()=>{
     stringToUpdate.lastIndexOf("/"), stringToUpdate.lastIndexOf("x"));
   const stringToCheck = stringToUpdate.slice(index+1);
   if(!(/\./).test(stringToCheck)){
-    console.log('here');
     if(lastChar>=0){
       lastChar = lastChar.concat(".");
       if((opsString.length===0)){
