@@ -47,17 +47,25 @@ const nonNumberClickedHandler = event =>{
   setCharDisplay(newChar);
   let newOpsString = opsString;
 
-  if(/[\+\x\/]$/.test(newOpsString) && newChar!="-"){
+  if((/--$/).test(newOpsString)){
+    if(newChar!="-"){
+      newOpsString = removeLastChar(newOpsString).concat(newChar);
+    }
+  }
+  else if(/[\+\x\/]$/.test(newOpsString) && newChar!="-"){
     newOpsString = removeLastChar(newOpsString).concat(newChar);
-    setOpsString(newOpsString);
+    // setOpsString(newOpsString);
   }
-  // else if((/--$/).test(newOpsString)){
-    
-  // }
-  else{
+  else if((/[\+\/\x]\-$/).test(newOpsString)){
+    if(newChar!="-"){
+      newOpsString =removeLastChar(removeLastChar(newOpsString));
+      newOpsString = newOpsString.concat(newChar);
+    }
+  }
+  else {
     newOpsString = newOpsString.concat(newChar);
-    setOpsString(newOpsString);
   }
+  setOpsString(newOpsString);
 }
 
 const decimalClickedHandler=()=>{
