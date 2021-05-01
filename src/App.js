@@ -47,7 +47,7 @@ const nonNumberClickedHandler = event =>{
   setCharDisplay(newChar);
   let newOpsString = opsString;
 
-  if(/[\+\x\/]$/.test(newOpsString)){
+  if(/[\+\x\/]$/.test(newOpsString) && newChar!="-"){
     newOpsString = removeLastChar(newOpsString).concat(newChar);
     setOpsString(newOpsString);
   }
@@ -66,11 +66,15 @@ const decimalClickedHandler=()=>{
   let index = Math.max(stringToUpdate.lastIndexOf("+"), stringToUpdate.lastIndexOf("-"),
     stringToUpdate.lastIndexOf("/"), stringToUpdate.lastIndexOf("x"));
   const stringToCheck = stringToUpdate.slice(index+1);
-  console.log(index, stringToCheck);
   if(!(/\./).test(stringToCheck)){
+    console.log('here');
     if(lastChar>=0){
       lastChar = lastChar.concat(".");
-      stringToUpdate = stringToUpdate.concat(".");
+      if((opsString.length===0)){
+        stringToUpdate = stringToUpdate.concat("0.");
+      }else{
+        stringToUpdate = stringToUpdate.concat(".");
+      }
       setCharDisplay(lastChar);
       setOpsString(stringToUpdate);
     }else{
@@ -97,10 +101,8 @@ const evaluationHandler=()=>{
     //   setOpsString("=NaN");
     // }
     else{
-
       testString = testString.replaceAll("x","*");
       const result = eval(testString);
-      console.log(result);
       var resultString = testString.concat(`=${result}`);
       setCharDisplay(result);
       setOpsString(resultString);
