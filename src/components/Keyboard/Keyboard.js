@@ -26,7 +26,7 @@ const Keyboard = props => {
             <button id="three" className={classes.NumberButton} onClick={props.numClicked} value="3">3</button>
             <button id="equals" className={classes.EqualButton} onClick={props.onEqualClicked}>=</button>
             <button id="zero" className={classes.ZeroButton} onClick={props.numClicked} value="0">0</button>
-            <button id="decimal" className={classes.NumberButton} >.</button>
+            <button id="decimal" className={classes.NumberButton} onClick={props.onDecimalClicked}>.</button>
         </Card>
     )
 }
